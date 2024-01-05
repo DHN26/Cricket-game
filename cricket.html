@@ -1,0 +1,104 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <style>
+            body{
+                text-align: center;
+            }
+            .button{
+                width: 80px;
+                height: 30px;
+                font-size: medium;
+                margin: 5px;
+                border-radius: 5px;
+            }
+        </style>
+        <title>Cricket game</title>
+    </head>
+    <body>
+        <h1>Bat Ball and Stump Game</h1>
+
+        <!--BAT AS A CHOICE-->
+        <button class="button" onclick="
+        {
+        
+        let  result;
+
+        if(cc==='Ball')
+        result='User Won!!';
+        else if(cc==='Bat')
+        result=`It's a tie!`;
+        else
+        result=`Computer won!`;
+
+        alertMessage('Bat',cc,result);
+        }
+        ">Bat</button>
+
+        <!--BALL AS A CHOICE-->
+        <button class="button" onclick="
+        {
+        
+        cc=computerChoice();
+        let  result;
+
+        if(cc==='Stump')
+        result='User Won!!';
+        else if(cc==='Ball')
+        result=`It's a tie!`;
+        else
+        result=`Computer won!`;
+
+        alertMessage('Ball',cc,result);
+        }
+        ">Ball</button>
+
+        <!--STUMP AS A CHOICE-->
+        <button class="button" onclick="
+        {
+        
+
+        let  result;
+
+        if(cc==='Ball')
+        result='Computer Won!';
+        else if(cc==='Bat')
+            result=`User won!!`;
+        else
+        result=`It's a tie!`;
+
+        alertMessage('Stump',cc,result);
+       }
+        ">Stump</button>
+        
+
+        <script>
+            function computerChoice()
+            {
+                let randomNumber=Math.random()*3;
+                let cc;
+                if(randomNumber>0 && randomNumber<=1)
+                {
+                    return 'Bat'
+                }
+                else if(randomNumber>1 && randomNumber<=2)
+                {
+                    return 'Ball';
+                }
+                else
+                {
+                    return 'Stump';
+                }
+                    
+            }
+
+            //alert message function
+            function alertMessage(choice,cc,result)
+            {
+                alert(`You've chosen to ${choice}, Computer's choice is ${cc} and so, ${result}`);
+            }
+
+        </script>
+
+    </body>
+    </html>
