@@ -6,17 +6,33 @@
                 text-align: center;
             }
             .button{
+                width: 100px;
+                height: 100px;
+                font-size: medium;
+                margin: 10px;
+                border-radius: 8px;
+                cursor: pointer;
+                background-color: rgb(220, 221, 221);
+            }
+            .reset-button{
                 width: 80px;
                 height: 30px;
                 font-size: medium;
-                margin: 5px;
+                margin: 10px;
                 border-radius: 5px;
+                cursor: pointer;
+                background-color: rgb(220, 221, 221);
+            }
+            .button-image{
+                height: 80px;
             }
         </style>
         <title>Cricket game</title>
     </head>
     <body>
         <h1>Bat Ball and Stump Game</h1>
+
+        
 
         <!--BAT AS A CHOICE-->
         <button class="button" onclick="
@@ -25,15 +41,29 @@
         let  result;
 
         if(cc==='Ball')
-        result='User Won!!';
+        {
+            score.win++;
+            result='User Won!!';
+        }
+        
         else if(cc==='Bat')
-        result=`It's a tie!`;
+        {
+            score.tie++;
+            result=`It's a tie!`;
+        }
+        
         else
-        result=`Computer won!`;
+        {
+            score.loss++;
+            result=`Computer won!`; 
+        }
+        
 
         alertMessage('Bat',cc,result);
         }
-        ">Bat</button>
+        ">
+        <img src="bat.png" alt="bat image" class="button-image"/>
+        </button>
 
         <!--BALL AS A CHOICE-->
         <button class="button" onclick="
@@ -43,15 +73,27 @@
         let  result;
 
         if(cc==='Stump')
-        result='User Won!!';
+        {
+            score.win++;
+            result='User Won!!';
+        }
+        
         else if(cc==='Ball')
-        result=`It's a tie!`;
+        {
+            score.tie++;
+            result=`It's a tie!`;
+        }
+        
         else
-        result=`Computer won!`;
+        {
+            score.loss++;
+            result=`Computer won!`;
+        }
+        
 
         alertMessage('Ball',cc,result);
         }
-        ">Ball</button>
+        "><img src="ball.png" alt="bat image" class="button-image"/></button>
 
         <!--STUMP AS A CHOICE-->
         <button class="button" onclick="
@@ -61,18 +103,65 @@
         let  result;
 
         if(cc==='Ball')
-        result='Computer Won!';
+        {
+            score.loss++;
+            result='Computer Won!'; 
+        }
+        
         else if(cc==='Bat')
+        {
             result=`User won!!`;
+            score.win++;
+        }
+            
         else
-        result=`It's a tie!`;
+        {
+            result=`It's a tie!`;
+            score.tie++;
+        }
+        
 
         alertMessage('Stump',cc,result);
        }
-        ">Stump</button>
-        
+        "><img src="stump.png" alt="bat image" class="button-image"/></button>
+
+
+        <!--DIV'S INORDER TO DISPLAY RESULT IN HTML PAGE RATHER THAN POP UP-->
+        <h3 id="user-move"></h3>
+        <h3 id="computer-move"></h3>
+        <h3 id="result"></h3>
+        <h3 id="score"></h3>
+
+        <!--RESET BUTTON-->
+        <button class="reset-button" onclick="localStorage.clear(); resetScore();">Reset</button>
+
+
+
+        <!--REAL LOGIC-->
 
         <script>
+            let scoreStr=localStorage.getItem('Score');
+            let score;
+            resetScore(scoreStr);
+            
+            function resetScore(scoreStr)
+            {
+                score =scoreStr? JSON.parse(scoreStr) : {   
+                    win:0,
+                    loss:0,
+                    tie:0,    
+                };
+                    
+                score.displayScore= function(){
+                    return `Won : ${score.win} | Loss : ${score.loss} | Tie : ${score.tie}`;
+                };
+
+                alertMessage();
+                
+                
+            }
+            
+            
             function computerChoice()
             {
                 let randomNumber=Math.random()*3;
@@ -95,7 +184,16 @@
             //alert message function
             function alertMessage(choice,cc,result)
             {
-                alert(`You've chosen to ${choice}, Computer's choice is ${cc} and so, ${result}`);
+                localStorage.setItem('Score',JSON.stringify(score));
+                document.querySelector('#user-move').innerHTML= choice ?`You've chosen to ${choice}`: '';
+                document.querySelector('#computer-move').innerHTML= cc ? ` Computer's choice is ${cc}`:'';
+                document.querySelector('#result').innerHTML= result ?`So, ${result}`:'';
+                document.querySelector('#score').innerHTML=`||  ${score.displayScore()}  ||`;
+                
+
+                console.log(score)
+                
+                
             }
 
         </script>
